@@ -1,0 +1,102 @@
+/* Members Page Container */
+.members-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0 20px 0;
+}
+
+.members-header h4 {
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+/* Search Bar */
+.search-input {
+  margin-bottom: 20px;
+}
+
+/* Table Container */
+.table-container {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table Header */
+.MuiTableHead-root {
+  background-color: #e0f2fe;
+}
+
+.MuiTableCell-head {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+/* Table Body Rows */
+.MuiTableRow-root:hover {
+  background-color: #f0f9ff;
+  transition: background 0.3s ease;
+}
+
+/* Action Buttons */
+.MuiButton-root {
+  text-transform: none;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.MuiButton-outlinedPrimary {
+  border-color: #3b82f6;
+  color: #1e3a8a;
+}
+
+.MuiButton-outlinedPrimary:hover {
+  background-color: #dbeafe;
+  border-color: #1e40af;
+}
+
+.MuiButton-outlinedError {
+  border-color: #ef4444;
+  color: #b91c1c;
+}
+
+.MuiButton-outlinedError:hover {
+  background-color: #fee2e2;
+  border-color: #b91c1c;
+}
+
+/* Dialog overrides handled by MUI */
+
+/* Responsive Padding for Container */
+.MuiContainer-root {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Snackbar (handled by MUI but can enhance) */
+.MuiAlert-root {
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  .members-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .search-input {
+    margin-top: 10px;
+  }
+
+  .MuiTableCell-root {
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+
+  .MuiButton-root {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}

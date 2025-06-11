@@ -1,0 +1,128 @@
+.member-dashboard__container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.member-dashboard__header {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.member-dashboard__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.member-dashboard__card {
+  flex: 1 1 48%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.member-dashboard__card-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.member-dashboard__list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.member-dashboard__item {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.member-dashboard__item-main {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.member-dashboard__item-sub {
+  font-size: 14px;
+  color: #666;
+}
+
+.member-dashboard__button {
+  margin-top: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.member-dashboard__button:hover {
+  background-color: #0056b3;
+}
+
+.member-dashboard__no-data {
+  font-size: 14px;
+  color: #999;
+  margin: 10px 0;
+}
+
+.member-dashboard__view-link {
+  background-color: #28a745;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.member-dashboard__view-link:hover {
+  background-color: #218838;
+}
+
+.member-dashboard__schedule {
+  margin-top: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.member-dashboard__center {
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member-dashboard__loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+.member-dashboard__error {
+  color: red;
+  text-align: center;
+  margin-top: 50px;
+  font-size: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

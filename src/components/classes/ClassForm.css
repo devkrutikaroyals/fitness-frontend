@@ -1,0 +1,64 @@
+.class-form {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 116, 217, 0.1);
+  margin-top: 16px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* TextField background */
+.MuiTextField-root {
+  background-color: #f0f9ff;
+  border-radius: 6px;
+}
+
+/* Button styles */
+.MuiButton-containedPrimary {
+  background-color: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.MuiButton-containedPrimary:hover {
+  background-color: #2563eb;
+}
+
+.MuiButton-outlinedSecondary {
+  color: #64748b;
+  border-color: #cbd5e1;
+}
+
+.MuiButton-outlinedSecondary:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  .class-form {
+    padding: 16px;
+  }
+
+  .MuiButton-containedPrimary,
+  .MuiButton-outlinedSecondary {
+    width: 100%;
+  }
+
+  .MuiBox-root {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+}
+
+/* Schedule input */
+input[type="datetime-local"] {
+  background-color: #f0f9ff;
+  border-radius: 6px;
+}

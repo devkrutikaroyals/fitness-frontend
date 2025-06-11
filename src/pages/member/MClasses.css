@@ -1,0 +1,155 @@
+/* Container styling */
+.mclasses-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Heading */
+.mclasses-container h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Search input */
+.search-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 25px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Grid layout for class cards */
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Class card */
+.class-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.class-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Card content */
+.card-content h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #007bff;
+}
+
+.card-content p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Capacity chip */
+.capacity-chip {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 20px;
+  background-color: #e0f7fa;
+  color: #00796b;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.capacity-chip.full {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Card actions (buttons) */
+.card-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Button styles */
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+/* Enroll button */
+.btn.enroll {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn.enroll:hover {
+  background-color: #0056b3;
+}
+
+/* Full / Enrolled button (disabled) */
+.btn.full,
+.btn.enrolled {
+  background-color: #ddd;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Details button (Link) */
+.btn.details {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn.details:hover {
+  background-color: #e0e0e0;
+}
+
+/* Loading spinner container */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+/* Spinner animation */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #ddd;
+  border-top: 5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Keyframes for spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
