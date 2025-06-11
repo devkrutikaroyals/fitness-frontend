@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../utils/api';  // your axios instance
+import api from '../utils/api';
 import setAuthToken from '../utils/setAuthToken';
 
 export const AuthContext = createContext();
@@ -15,12 +15,14 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token) {
-      setAuthToken(token);
-      loadUser();
-    } else {
+    const initializeAuth = async () => {
+      if (token) {
+        setAuthToken(token);
+        await loadUser();
+      }
       setLoading(false);
-    }
+    };
+    initializeAuth();
   }, [token]);
 
   const loadUser = async () => {
@@ -30,47 +32,52 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setError(null);
     } catch (err) {
-      setError(err.response?.data?.error || 'Authentication error');
+      handleAuthError(err);
+    }
+  };
+
+  const handleAuthError = (err) => {
+    const errorMessage = err.response?.data?.message || 
+                        err.message || 
+                        'Authentication error';
+    setError(errorMessage);
+    if (err.response?.status === 401) {
       logout();
-    } finally {
-      setLoading(false);
     }
   };
 
   const register = async (formData) => {
     try {
+      setLoading(true);
       const res = await api.post('/auth/register', formData);
-      const newToken = res.data.data.token;
-      const role = res.data.data.role;
-
-      setToken(newToken);
-      localStorage.setItem('token', newToken);
-      setAuthToken(newToken);
-
-      await loadUser();
-      navigate(role === 'admin' ? '/admin/dashboard' : '/member/dashboard');
+      handleAuthSuccess(res.data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed');
+      handleAuthError(err);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
   const login = async (formData) => {
     try {
+      setLoading(true);
       const res = await api.post('/auth/login', formData);
-      const newToken = res.data.data.token;
-      const role = res.data.data.role;
-
-      setToken(newToken);
-      localStorage.setItem('token', newToken);
-      setAuthToken(newToken);
-
-      await loadUser();
-      navigate(role === 'admin' ? '/admin/dashboard' : '/member/dashboard');
+      handleAuthSuccess(res.data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      handleAuthError(err);
       throw err;
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleAuthSuccess = (data) => {
+    const { token, role } = data.data;
+    setToken(token);
+    localStorage.setItem('token', token);
+    setAuthToken(token);
+    navigate(role === 'admin' ? '/admin/dashboard' : '/member/dashboard');
   };
 
   const logout = () => {
