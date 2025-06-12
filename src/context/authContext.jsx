@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -18,7 +19,15 @@ export const AuthProvider = ({ children }) => {
     const initializeAuth = async () => {
       if (token) {
         setAuthToken(token);
-        await loadUser();
+        try {
+          const res = await api.get('/auth/me');
+          if (res.data.success) {
+            setUser(res.data.data);
+            setIsAuthenticated(true);
+          }
+        } catch (err) {
+          logout();
+        }
       }
       setLoading(false);
     };
@@ -28,21 +37,17 @@ export const AuthProvider = ({ children }) => {
   const loadUser = async () => {
     try {
       const res = await api.get('/auth/me');
-      setUser(res.data.data);
-      setIsAuthenticated(true);
-      setError(null);
+      if (res.data.success) {
+        setUser(res.data.data);
+        setIsAuthenticated(true);
+        setError(null);
+        return res.data.data;
+      }
+      throw new Error('Failed to load user');
     } catch (err) {
-      handleAuthError(err);
-    }
-  };
-
-  const handleAuthError = (err) => {
-    const errorMessage = err.response?.data?.message || 
-                        err.message || 
-                        'Authentication error';
-    setError(errorMessage);
-    if (err.response?.status === 401) {
+      setError(err.response?.data?.error || 'Session expired. Please login again.');
       logout();
+      return null;
     }
   };
 
@@ -50,10 +55,20 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
       const res = await api.post('/auth/register', formData);
-      handleAuthSuccess(res.data);
+      
+      if (!res.data.success) {
+        throw new Error(res.data.error || 'Registration failed');
+      }
+
+      // Show success message and redirect to login
+      setMessage(res.data.message || 'Registration successful. Please login.');
+      navigate('/login');
+      
+      return { success: true };
     } catch (err) {
-      handleAuthError(err);
-      throw err;
+      const errorMessage = err.response?.data?.error || err.message || 'Registration failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     } finally {
       setLoading(false);
     }
@@ -63,21 +78,32 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
       const res = await api.post('/auth/login', formData);
-      handleAuthSuccess(res.data);
+      
+      if (!res.data.success) {
+        throw new Error(res.data.error || 'Login failed');
+      }
+
+      const { token, role } = res.data.data;
+      
+      // Save token and load user
+      localStorage.setItem('token', token);
+      setToken(token);
+      setAuthToken(token);
+      
+      // Load user data
+      const loadedUser = await loadUser();
+      if (loadedUser) {
+        navigate(role === 'admin' ? '/admin/dashboard' : '/member/dashboard');
+      }
+      
+      return { success: true };
     } catch (err) {
-      handleAuthError(err);
-      throw err;
+      const errorMessage = err.response?.data?.error || err.message || 'Login failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleAuthSuccess = (data) => {
-    const { token, role } = data.data;
-    setToken(token);
-    localStorage.setItem('token', token);
-    setAuthToken(token);
-    navigate(role === 'admin' ? '/admin/dashboard' : '/member/dashboard');
   };
 
   const logout = () => {
@@ -90,6 +116,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const clearErrors = () => setError(null);
+  const clearMessage = () => setMessage(null);
 
   return (
     <AuthContext.Provider
@@ -99,10 +126,12 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         loading,
         error,
+        message,
         register,
         login,
         logout,
         clearErrors,
+        clearMessage,
         loadUser,
       }}
     >
